@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/kballard/go-shellquote"
+	// "github.com/alessio/shellescape"
 	v1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
@@ -32,7 +32,7 @@ func main() {
 		"export MIXED_VAR=${A}:${B}",
 		"date",
 		"env|sort",
-		shellquote.Join("echo", "Hello from the Kubernetes cluster"),
+		"echo Hello from the Kubernetes cluster",
 		"echo $MIXED_VAR",
 	}
 	script := strings.Join(commands, ";")
