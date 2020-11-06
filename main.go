@@ -29,8 +29,11 @@ func main() {
 	// script := "date; echo Hello from the Kubernetes cluster"
 
 	commands := []string{
+		"export MIXED_VAR=${A}:${B}",
 		"date",
+		"env|sort",
 		shellquote.Join("echo", "Hello from the Kubernetes cluster"),
+		"echo $MIXED_VAR",
 	}
 	script := strings.Join(commands, ";")
 	fmt.Println(script)
@@ -63,6 +66,7 @@ func main() {
 					},
 				},
 			},
+			RestartPolicy: v1.RestartPolicyNever,
 		},
 	}
 	_, err = kc.CoreV1().Pods("default").Create(context.TODO(), pod, metav1.CreateOptions{})
