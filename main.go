@@ -42,7 +42,7 @@ func main() {
 			Containers: []v1.Container{
 				{
 					Name:    "busybox",
-					Image:   "buxybox",
+					Image:   "busybox",
 					Command: []string{"/bin/bash"},
 					Args: []string{
 						"-c",
