@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"path/filepath"
+	"strings"
 
 	"github.com/kballard/go-shellquote"
 	v1 "k8s.io/api/core/v1"
@@ -26,11 +27,12 @@ func main() {
 	kc := kubernetes.NewForConfigOrDie(config)
 
 	// script := "date; echo Hello from the Kubernetes cluster"
-	args := []string{
+
+	commands := []string{
 		"date",
-		"echo Hello from the Kubernetes cluster",
+		shellquote.Join("echo", "Hello from the Kubernetes cluster"),
 	}
-	script := shellquote.Join(args...)
+	script := strings.Join(commands, ";")
 	fmt.Println(script)
 
 	pod := &v1.Pod{
@@ -43,7 +45,7 @@ func main() {
 				{
 					Name:    "busybox",
 					Image:   "busybox",
-					Command: []string{"/bin/bash"},
+					Command: []string{"/bin/sh"},
 					Args: []string{
 						"-c",
 						script,
